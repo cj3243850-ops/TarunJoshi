@@ -4,212 +4,197 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tarun Joshi | IT Consultant Portfolio</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
             --primary: #2ecc71;
-            --dark: #0f172a;
+            --secondary: #27ae60;
+            --dark-bg: #0f172a;
             --card-bg: #1e293b;
-            --text: #f8fafc;
+            --text-main: #f8fafc;
+            --text-dim: #94a3b8;
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; scroll-behavior: smooth; }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Poppins', sans-serif; background: var(--dark-bg); color: var(--text-main); line-height: 1.6; overflow-x: hidden; }
 
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: var(--dark);
-            color: var(--text);
-            overflow-x: hidden;
-        }
+        /* Smooth Scroll */
+        html { scroll-behavior: smooth; }
 
         /* Animations */
-        @keyframes fadeInUp {
-            from { opacity: 0; transform: translateY(30px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
+        @keyframes fadeInDown { from { opacity: 0; transform: translateY(-30px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes fadeInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
 
-        .reveal { opacity: 0; transition: all 0.8s ease-out; }
+        .reveal { opacity: 0; transform: translateY(30px); transition: all 0.8s ease-out; }
         .reveal.active { opacity: 1; transform: translateY(0); }
 
-        /* Header / Hero Section */
-        header {
+        /* Hero Section */
+        .hero {
             height: 100vh;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            background: linear-gradient(rgba(15, 23, 42, 0.8), rgba(15, 23, 42, 0.8)), url('1.jpeg') center/cover;
+            background: linear-gradient(rgba(15, 23, 42, 0.85), rgba(15, 23, 42, 0.85)), url('1.jpeg') center/cover;
             text-align: center;
             padding: 20px;
         }
 
-        .profile-img {
-            width: 180px;
-            height: 180px;
-            border-radius: 50%;
-            border: 4px solid var(--primary);
-            margin-bottom: 20px;
-            object-fit: cover;
-            animation: fadeInUp 1s ease-out;
+        .hero h1 { font-size: 4rem; color: var(--primary); animation: fadeInDown 1s ease; margin-bottom: 10px; }
+        .hero p { font-size: 1.4rem; color: var(--text-dim); animation: fadeInUp 1s ease; max-width: 700px; }
+
+        .container { max-width: 1100px; margin: auto; padding: 60px 20px; }
+
+        /* Card Styles */
+        .section-title { font-size: 2.5rem; margin-bottom: 40px; border-left: 5px solid var(--primary); padding-left: 20px; }
+        .card { background: var(--card-bg); padding: 30px; border-radius: 20px; margin-bottom: 30px; border: 1px solid rgba(255,255,255,0.05); transition: 0.3s; }
+        .card:hover { transform: translateY(-5px); box-shadow: 0 10px 30px rgba(0,0,0,0.3); border-color: var(--primary); }
+
+        /* Grid for Skills & Stats */
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; }
+
+        .tag { display: inline-block; background: rgba(46, 204, 113, 0.15); color: var(--primary); padding: 8px 18px; border-radius: 50px; margin: 5px; font-weight: 500; font-size: 0.9rem; }
+
+        /* Photo Gallery & Lightbox */
+        .gallery { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-top: 20px; }
+        .gallery img { 
+            width: 100%; height: 250px; border-radius: 15px; object-fit: cover; 
+            cursor: pointer; transition: 0.4s; border: 2px solid transparent;
         }
+        .gallery img:hover { transform: scale(1.03); border-color: var(--primary); }
 
-        h1 { font-size: 3.5rem; margin-bottom: 10px; color: var(--primary); }
-        .title { font-size: 1.5rem; color: #94a3b8; margin-bottom: 30px; }
-
-        /* Gallery Section */
-        .gallery {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 15px;
-            padding: 40px 0;
+        #lightbox {
+            position: fixed; z-index: 999; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.9); display: none; justify-content: center; align-items: center;
         }
+        #lightbox img { max-width: 90%; max-height: 80%; border-radius: 10px; box-shadow: 0 0 20px var(--primary); }
 
-        .gallery img {
-            width: 100%;
-            height: 250px;
-            border-radius: 12px;
-            object-fit: cover;
-            cursor: pointer;
-            transition: 0.4s;
-            filter: grayscale(40%);
+        /* List Styling */
+        ul { list-style: none; }
+        li { margin-bottom: 12px; display: flex; align-items: center; }
+        li i { color: var(--primary); margin-right: 15px; }
+
+        /* Floating Contact */
+        .contact-float {
+            position: fixed; bottom: 30px; right: 30px; background: var(--primary);
+            width: 60px; height: 60px; border-radius: 50%; display: flex;
+            justify-content: center; align-items: center; font-size: 24px;
+            color: white; box-shadow: 0 5px 15px rgba(0,0,0,0.3); cursor: pointer; z-index: 100;
         }
-
-        .gallery img:hover {
-            transform: scale(1.05);
-            filter: grayscale(0%);
-            border: 2px solid var(--primary);
-        }
-
-        .container { max-width: 1100px; margin: auto; padding: 0 20px; }
-
-        /* Experience & Education Cards */
-        section { padding: 80px 0; }
-        .card {
-            background: var(--card-bg);
-            padding: 2rem;
-            border-radius: 15px;
-            margin-bottom: 20px;
-            border-bottom: 3px solid var(--primary);
-        }
-
-        .skills-tag {
-            display: inline-block;
-            background: rgba(46, 204, 113, 0.1);
-            color: var(--primary);
-            padding: 8px 15px;
-            border-radius: 20px;
-            margin: 5px;
-            font-weight: 600;
-        }
-
-        .contact-bar {
-            background: var(--primary);
-            color: white;
-            padding: 15px;
-            text-align: center;
-            border-radius: 10px;
-            margin-top: 40px;
-        }
-
-        a { color: inherit; text-decoration: none; }
     </style>
 </head>
 <body>
 
-    <header>
-        <img src="1.jpeg" alt="Tarun Joshi" class="profile-img">
-        <h1 class="reveal">Tarun Joshi</h1>
-        <p class="title reveal">IT Consultant | Project Management | Quality Assurance</p>
-        <div>
-            <a href="mailto:joshit857@gmail.com" class="skills-tag" style="background: var(--primary); color: white;">Email Me</a>
-            <a href="#about" class="skills-tag">View Portfolio</a>
+    <div id="lightbox" onclick="this.style.display='none'"><img src="" alt="Preview"></div>
+
+    <section class="hero">
+        <h1>Tarun Joshi</h1>
+        <p>Expert IT Consultant & Software Testing Specialist</p>
+        <div style="margin-top: 30px;">
+            <a href="#about" class="tag" style="background: var(--primary); color: white; padding: 12px 25px;">Explore Portfolio</a>
         </div>
-    </header>
+    </section>
 
     <div class="container">
         <section id="about" class="reveal">
-            <h2><i class="fas fa-user"></i> About Me</h2>
+            <h2 class="section-title">Professional Summary</h2>
             <div class="card">
-                <p>As an IT Consultant with 4 years of experience at Expedien E-solutions, I specialize in software testing, quality assurance, and project management. [cite: 3] Based in Udaipur, I bring a strong background in ERP handling and client relations. [cite: 23, 69]</p>
+                <p style="font-size: 1.1rem; color: #cbd5e1;">
+                    As an IT Consultant with <strong>4 years of experience</strong> at Expedien E-solutions, I have expertise in IT project management, software testing, and quality assurance. [cite: 3, 39] With a degree in B.A from MLSU University, I have developed strong communication skills and proficiency in Microsoft Office. [cite: 4, 40] My focus is on delivering high-quality solutions and ensuring client satisfaction. [cite: 5, 41]
+                </p>
             </div>
         </section>
 
         <section class="reveal">
-            <h2><i class="fas fa-th-large"></i> Work Gallery</h2>
-            <div class="gallery">
-                <img src="1.jpeg" alt="Work 1">
-                <img src="2.jpeg" alt="Work 2">
-                <img src="3.jpeg" alt="Work 3">
-                <img src="4.jpeg" alt="Work 4">
-                <img src="5.jpeg" alt="Work 5">
-            </div>
-        </section>
-
-        <section class="reveal">
-            <h2><i class="fas fa-tools"></i> Core Expertise</h2>
+            <h2 class="section-title">Experience & Roles</h2>
             <div class="card">
-                <span class="skills-tag">IT Project Management [cite: 49]</span>
-                <span class="skills-tag">Software Testing [cite: 47]</span>
-                <span class="skills-tag">Quality Assurance [cite: 51]</span>
-                <span class="skills-tag">ERP Handling [cite: 62]</span>
-                <span class="skills-tag">Microsoft Office (All) [cite: 45]</span>
-                <span class="skills-tag">System Analysis [cite: 28]</span>
-            </div>
-        </section>
-
-        <section class="reveal">
-            <h2><i class="fas fa-briefcase"></i> Experience</h2>
-            <div class="card">
-                <h3 style="color: var(--primary);">IT Consultant (ERP Specialist)</h3>
-                <p><strong>Expedien E-solutions (Noida/Udaipur)</strong> | 2019 - Jan 2025 [cite: 62]</p>
-                <ul style="margin-top: 10px; padding-left: 20px;">
-                    <li>Managed ERP implementations and client business needs. [cite: 26, 62]</li>
-                    <li>Executed software maintenance and upgrades for optimal performance. [cite: 33]</li>
-                    <li>Conducted debugging and full-cycle software testing. [cite: 29]</li>
+                <h3 style="color: var(--primary); margin-bottom: 15px;">IT Consultant (ERP Handling)</h3>
+                <p><strong>Expedien E-solutions</strong> | 2019 - January 2025 [cite: 25, 62]</p>
+                <ul style="margin-top: 20px;">
+                    <li><i class="fas fa-check-circle"></i> Worked with clients to identify business needs and provide customized software solutions. [cite: 26]</li>
+                    <li><i class="fas fa-check-circle"></i> Conducted system analysis and design for optimal software development approach. </li>
+                    <li><i class="fas fa-check-circle"></i> Developed and implemented solutions, including full-cycle testing and debugging. [cite: 29]</li>
+                    <li><i class="fas fa-check-circle"></i> Collaborated with cross-functional teams to ensure on-time delivery within budget. [cite: 33]</li>
                 </ul>
             </div>
-            <div class="card">
-                <h3>Additional Roles</h3>
-                <p>• Supervisor at Whitix India Pvt Ltd (4 Months) [cite: 64]</p>
-                <p>• Credit Card Executive at SBI Teamlease (3 Months) [cite: 63]</p>
+            <div class="grid">
+                <div class="card">
+                    <h4>Whitix India Pvt Ltd</h4>
+                    <p class="tag">Supervisor (4 Months) [cite: 64]</p>
+                </div>
+                <div class="card">
+                    <h4>SBI Teamlease Service Ltd</h4>
+                    <p class="tag">Credit Card Executive (3 Months) [cite: 63]</p>
+                </div>
             </div>
         </section>
 
         <section class="reveal">
-            <h2><i class="fas fa-graduation-cap"></i> Education & Certifications</h2>
-            <div class="card">
-                <p><strong>B.A. Graduate</strong> - Mohanlal Sukhadia University (2021) [cite: 57]</p>
-                <p><strong>RSCIT Certified</strong> - VMOU Kota (2019) [cite: 66]</p>
-                <p><strong>Higher Secondary (12th)</strong> - RBSE, Ajmer (2018) [cite: 56]</p>
+            <h2 class="section-title">Personal Gallery</h2>
+            <div class="gallery">
+                <img src="1.jpeg" alt="Tarun 1" onclick="showLightbox(this.src)">
+                <img src="2.jpeg" alt="Tarun 2" onclick="showLightbox(this.src)">
+                <img src="3.jpeg" alt="Tarun 3" onclick="showLightbox(this.src)">
+                <img src="4.jpeg" alt="Tarun 4" onclick="showLightbox(this.src)">
+                <img src="5.jpeg" alt="Tarun 5" onclick="showLightbox(this.src)">
             </div>
         </section>
 
-        <div class="contact-bar reveal">
-            <p><i class="fas fa-phone"></i> +91 7568881230 [cite: 67] | <i class="fas fa-envelope"></i> joshit857@gmail.com [cite: 68]</p>
+        <div class="grid">
+            <section class="reveal">
+                <h2 class="section-title">Technical Skills</h2>
+                <div class="card">
+                    <span class="tag">IT Project Management [cite: 17, 49]</span>
+                    <span class="tag">Software Testing [cite: 15, 47]</span>
+                    <span class="tag">Quality Assurance [cite: 19, 51]</span>
+                    <span class="tag">Microsoft Office (All) [cite: 12, 45]</span>
+                    <span class="tag">ERP Handling [cite: 23, 62]</span>
+                    <span class="tag">Problem Solving [cite: 20, 51]</span>
+                </div>
+            </section>
+
+            <section class="reveal">
+                <h2 class="section-title">Education</h2>
+                <div class="card">
+                    <p><strong>B.A. Graduate</strong> - MLSU University (2021) [cite: 8, 57]</p>
+                    <p><strong>RSCIT</strong> - VMOU Kota (2019) [cite: 35, 66]</p>
+                    <p><strong>12th & 10th</strong> - RBSE, Ajmer [cite: 8, 54, 55, 56]</p>
+                    <hr style="margin: 15px 0; border: 0; border-top: 1px solid #334155;">
+                    <p><i class="fas fa-language"></i> Hindi & English [cite: 58, 59, 60]</p>
+                </div>
+            </section>
         </div>
     </div>
 
-    <footer style="text-align: center; padding: 40px; color: #64748b;">
-        <p>© 2026 Developed by CJ for Tarun Joshi</p>
+    <a href="mailto:joshit857@gmail.com" class="contact-float"><i class="fas fa-envelope"></i></a>
+
+    <footer style="text-align: center; padding: 50px; background: #070b14; color: var(--text-dim);">
+        <p>Tarun Joshi | IT Consultant | Udaipur, Rajasthan [cite: 69]</p>
+        <p style="margin-top: 10px; font-size: 0.8rem;">© 2026 Developed by CJ</p>
     </footer>
 
     <script>
-        // Scroll Reveal Animation
+        // Lightbox Function
+        function showLightbox(src) {
+            const lb = document.getElementById('lightbox');
+            lb.querySelector('img').src = src;
+            lb.style.display = 'flex';
+        }
+
+        // Scroll Reveal
         function reveal() {
             var reveals = document.querySelectorAll(".reveal");
             for (var i = 0; i < reveals.length; i++) {
                 var windowHeight = window.innerHeight;
                 var elementTop = reveals[i].getBoundingClientRect().top;
-                var elementVisible = 150;
-                if (elementTop < windowHeight - elementVisible) {
+                if (elementTop < windowHeight - 100) {
                     reveals[i].classList.add("active");
                 }
             }
         }
-
         window.addEventListener("scroll", reveal);
-        // Initial call
-        reveal();
+        reveal(); // Initial check
     </script>
 </body>
 </html>
