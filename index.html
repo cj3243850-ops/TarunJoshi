@@ -1,1 +1,158 @@
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tarun Joshi | IT Consultant Portfolio</title>
+    <style>
+        :root {
+            --primary-color: #2ecc71;
+            --dark-bg: #1a1a1a;
+            --text-light: #f4f4f4;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--dark-bg);
+            color: var(--text-light);
+            line-height: 1.6;
+            margin: 0;
+            overflow-x: hidden;
+        }
+
+        /* Smooth Animation */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.8s ease-out;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        header {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(45deg, #1a1a1a, #2c3e50);
+            text-align: center;
+        }
+
+        h1 { font-size: 3.5rem; color: var(--primary-color); margin-bottom: 0.5rem; }
+        .subtitle { font-size: 1.5rem; color: #bdc3c7; }
+
+        .container { max-width: 1000px; margin: auto; padding: 2rem; }
+
+        section { padding: 4rem 0; border-bottom: 1px solid #333; }
+
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .skill-card {
+            background: #252525;
+            padding: 1.5rem;
+            border-radius: 10px;
+            border-left: 4px solid var(--primary-color);
+            transition: transform 0.3s;
+        }
+
+        .skill-card:hover { transform: scale(1.05); }
+
+        .exp-item { margin-bottom: 2rem; }
+        .date { color: var(--primary-color); font-weight: bold; }
+
+        .contact-btn {
+            display: inline-block;
+            background: var(--primary-color);
+            color: white;
+            padding: 1rem 2rem;
+            text-decoration: none;
+            border-radius: 50px;
+            margin-top: 2rem;
+            transition: background 0.3s;
+        }
+
+        .contact-btn:hover { background: #27ae60; }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1 class="fade-in">Tarun Joshi</h1>
+        <p class="subtitle fade-in">Professional IT Consultant</p>
+        <a href="mailto:joshit857@gmail.com" class="contact-btn fade-in">Get In Touch</a>
+    </header>
+
+    <div class="container">
+        <section id="about" class="fade-in">
+            <h2>About Me</h2>
+            <p>IT Consultant with 4 years of experience at Expedien E-solutions. Expertise in IT project management, software testing, and quality assurance. I focus on delivering high-quality solutions and ensuring client satisfaction[cite: 5, 41].</p>
+        </section>
+
+        <section id="experience" class="fade-in">
+            <h2>Professional Experience</h2>
+            <div class="exp-item">
+                <p class="date">2019 - January 2025</p>
+                <h3>IT Consultant (ERP Handling)</h3>
+                <p><strong>Expedien E-solutions / MLSU, Udaipur</strong> [cite: 23, 62]</p>
+                <ul>
+                    <li>Conducted system analysis and design for software development[cite: 28].</li>
+                    <li>Developed and implemented software solutions, including testing and debugging[cite: 29].</li>
+                    <li>Collaborated with cross-functional teams to meet project deadlines[cite: 33].</li>
+                </ul>
+            </div>
+            <div class="exp-item">
+                <p class="date">Recent Roles</p>
+                <ul>
+                    <li>Supervisor at Whitix India Private Limited (4 Months)[cite: 64].</li>
+                    <li>Credit Card Executive at SBI Teamlease Service Limited (3 Months)[cite: 63].</li>
+                </ul>
+            </div>
+        </section>
+
+        <section id="skills" class="fade-in">
+            <h2>Core Skills</h2>
+            <div class="skills-grid">
+                <div class="skill-card">Software Testing & QA [cite: 15, 47]</div>
+                <div class="skill-card">IT Project Management [cite: 17, 49]</div>
+                <div class="skill-card">Microsoft Office (All) [cite: 12, 45]</div>
+                <div class="skill-card">System Analysis [cite: 28]</div>
+                <div class="skill-card">Problem Solving [cite: 20, 51]</div>
+                <div class="skill-card">ERP Handling [cite: 23, 62]</div>
+            </div>
+        </section>
+
+        <section id="education" class="fade-in">
+            <h2>Education & Certifications</h2>
+            <ul>
+                <li><strong>Bachelor of Arts (B.A.)</strong> - MLSU University, Udaipur (2021) </li>
+                <li><strong>RSCIT</strong> - VMOU Kota (2019) [cite: 35, 66]</li>
+                <li><strong>12th & 10th</strong> - RBSE, Ajmer [cite: 8, 56]</li>
+            </ul>
+        </section>
+    </div>
+
+    <script>
+        // Simple Scroll Animation Logic
+        const observerOptions = { threshold: 0.2 };
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+    </script>
+</body>
+</html>
