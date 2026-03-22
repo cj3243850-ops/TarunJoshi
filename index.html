@@ -24,12 +24,23 @@
             overflow-x: hidden;
         }
 
-        /* Smooth Scroll & Animations */
-        html { scroll-behavior: smooth; }
-        .reveal { opacity: 0; transform: translateY(50px); transition: all 1.2s cubic-bezier(0.2, 1, 0.3, 1); }
+        /* Entry Animations */
+        .char-animate {
+            display: inline-block;
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 0.8s cubic-bezier(0.2, 1, 0.3, 1);
+        }
+        
+        .active .char-animate {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .reveal { opacity: 0; transform: translateY(40px); transition: all 1s ease-out; }
         .reveal.active { opacity: 1; transform: translateY(0); }
 
-        /* Hero Section - Extra Big Name */
+        /* Hero Section */
         .hero {
             height: 100vh;
             display: flex;
@@ -37,39 +48,41 @@
             justify-content: center;
             align-items: center;
             text-align: center;
-            background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.9)), url('1.jpeg') center/cover;
+            background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.9)), url('1.jpeg') center/cover;
             position: relative;
         }
 
         .hero h1 { 
             font-family: 'Syncopate', sans-serif; 
-            font-size: clamp(3rem, 10vw, 8rem); 
+            font-size: clamp(3.5rem, 12vw, 9rem); 
             font-weight: 700; 
             text-transform: uppercase;
-            line-height: 0.9;
-            color: #fff;
-            letter-spacing: -2px;
+            line-height: 0.85;
+            letter-spacing: -3px;
         }
 
-        .hero p { 
-            font-size: 1.2rem; 
-            color: var(--primary); 
-            letter-spacing: 5px; 
-            margin-top: 20px;
+        .hero .role-text {
+            font-size: 1.1rem;
+            color: var(--primary);
+            letter-spacing: 6px;
+            margin-top: 30px;
             text-transform: uppercase;
+            font-weight: 700;
+            opacity: 0;
+            transition: 1s ease 0.5s;
         }
 
-        /* Overlay for interaction */
+        .active .role-text { opacity: 1; }
+
+        /* Clean Entry Overlay */
         #entry {
             position: fixed; top:0; left:0; width:100%; height:100%;
             background: #000; z-index: 9999; display: flex; 
             justify-content: center; align-items: center; cursor: pointer;
+            transition: 0.8s ease;
         }
 
         .container { max-width: 1200px; margin: auto; padding: 100px 20px; }
-
-        .section-header { margin-bottom: 50px; }
-        .section-header h2 { font-family: 'Syncopate', sans-serif; font-size: 2.5rem; color: var(--primary); }
 
         .glass-card {
             background: var(--glass);
@@ -78,190 +91,158 @@
             border-radius: 30px;
             backdrop-filter: blur(20px);
             margin-bottom: 40px;
-            transition: 0.4s;
         }
-        .glass-card:hover { border-color: var(--primary); background: rgba(255,255,255,0.05); }
 
-        /* Professional Experience Styling */
-        .job-header { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 20px; }
-        .job-title { color: var(--primary); font-size: 1.8rem; font-weight: 700; }
-        .job-details { list-style: none; }
-        .job-details li { margin-bottom: 15px; padding-left: 25px; position: relative; color: #ccc; }
-        .job-details li::before { content: '→'; position: absolute; left: 0; color: var(--primary); }
+        /* Work History Styling */
+        .work-title { font-family: 'Syncopate', sans-serif; font-size: 2rem; color: var(--primary); margin-bottom: 30px; }
+        .job-card { border-left: 3px solid var(--primary); padding-left: 30px; margin-bottom: 40px; }
+        .job-card h3 { font-size: 1.8rem; margin-bottom: 10px; }
+        .job-card ul { list-style: none; color: #aaa; margin-top: 15px; }
+        .job-card li { margin-bottom: 10px; }
 
-        /* Gallery with Lightbox */
-        .gallery-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 20px;
+        /* Professional Contact Section */
+        .contact-box {
+            text-align: center;
+            padding: 80px 40px;
+            background: linear-gradient(145deg, #0a0a0a, #111);
+            border-radius: 40px;
+            border: 1px solid var(--border);
         }
-        .gallery-grid img {
-            width: 100%; height: 400px; object-fit: cover;
-            border-radius: 20px; cursor: pointer;
-            transition: 0.6s cubic-bezier(0.2, 1, 0.3, 1);
-            filter: grayscale(1);
-        }
-        .gallery-grid img:hover { filter: grayscale(0); transform: scale(1.02); }
 
-        /* Lightbox Preview */
+        .contact-link {
+            display: block;
+            font-size: clamp(1.5rem, 5vw, 3rem);
+            color: #fff;
+            text-decoration: none;
+            margin: 20px 0;
+            font-weight: 700;
+            transition: 0.3s;
+        }
+        .contact-link:hover { color: var(--primary); transform: scale(1.02); }
+
+        .social-icons { margin-top: 40px; font-size: 2rem; display: flex; justify-content: center; gap: 30px; }
+        .social-icons a { color: #555; transition: 0.3s; }
+        .social-icons a:hover { color: var(--primary); }
+
+        /* Lightbox */
         #lightbox {
             position: fixed; top:0; left:0; width:100%; height:100%;
-            background: rgba(0,0,0,0.95); z-index: 10000; display: none;
-            justify-content: center; align-items: center; padding: 20px;
+            background: rgba(0,0,0,0.9); z-index: 10000; display: none;
+            justify-content: center; align-items: center;
         }
-        #lightbox img { max-width: 100%; max-height: 90vh; border-radius: 10px; border: 1px solid var(--primary); }
-
-        .skill-tag {
-            display: inline-block; padding: 12px 25px; border-radius: 50px;
-            background: var(--glass); border: 1px solid var(--border);
-            margin: 8px; font-weight: 700; font-size: 0.9rem; transition: 0.3s;
-        }
-        .skill-tag:hover { background: var(--primary); color: #000; }
-
-        footer { text-align: center; padding: 100px 20px; color: #555; border-top: 1px solid var(--border); }
+        #lightbox img { max-height: 85vh; max-width: 90%; border-radius: 10px; }
     </style>
 </head>
 <body>
 
     <div id="entry" onclick="startPortfolio()">
-        <h2 style="font-family: 'Syncopate';">CLICK TO ENTER</h2>
+        <h2 style="font-family: 'Syncopate'; letter-spacing: 10px;">ENTER EXPERIENCE</h2>
     </div>
 
     <audio id="bg-music" loop>
         <source src="S.mp3" type="audio/mpeg">
     </audio>
 
-    <div id="lightbox" onclick="this.style.display='none'">
-        <img id="lightbox-img" src="" alt="Preview">
-    </div>
-
-    <header class="hero">
-        <p class="reveal">Welcome to the Portfolio of</p>
-        <h1 class="reveal">Tarun<br>Joshi</h1>
-        <p class="reveal">IT Consultant • Quality Assurance • Project Lead</p>
+    <header class="hero" id="hero-sec">
+        <h1 id="main-name">
+            <span class="char-animate">TARUN</span><br>
+            <span class="char-animate" style="transition-delay: 0.2s;">JOSHI</span>
+        </h1>
+        <p class="role-text">IT Consultant • ERP Lead • QA Expert</p>
     </header>
 
     <div class="container">
         <section class="glass-card reveal">
-            <div class="section-header"><h2>The Vision</h2></div>
-            <p style="font-size: 1.5rem; font-weight: 300; color: #eee;">
-                As an IT Consultant with 4 years at Expedien E-solutions, I specialize in delivering high-quality solutions. [cite: 3] With a degree in B.A from MLSU University, my focus is on ensuring client satisfaction through technical guidance and project leadership. [cite: 4, 6]
+            <h2 class="work-title">THE VISION</h2>
+            <p style="font-size: 1.4rem; font-weight: 300; color: #ddd;">
+                As an IT Consultant with 4 years at Expedien E-solutions, I specialize in delivering high-quality solutions. With a degree in B.A from MLSU University, my focus is on ensuring client satisfaction through technical guidance and project leadership.
             </p>
         </section>
 
         <section class="reveal">
-            <div class="section-header"><h2>Work History</h2></div>
-            <div class="glass-card">
-                <div class="job-header">
-                    <span class="job-title">IT Consultant & ERP Lead</span>
-                    <span style="color: var(--primary);">2019 — CURRENT</span>
+            <h2 class="work-title">WORK HISTORY</h2>
+            <div class="glass-card job-card">
+                <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+                    <h3>IT Consultant & ERP Lead</h3>
+                    <span style="color: var(--primary); font-weight: 700;">2019 — CURRENT</span>
                 </div>
-                <p style="margin-bottom: 20px; color: #888;">Expedien E-solutions (Noida/Udaipur)</p>
-                <ul class="job-details">
-                    <li>Worked with clients to identify business needs and provide customized software solutions. [cite: 26]</li>
-                    <li>Conducted system analysis and design for the best software development approaches. [cite: 28]</li>
-                    <li>Developed and implemented software solutions, including rigorous testing and debugging. [cite: 29]</li>
-                    <li>Collaborated with clients to develop strategic plans for implementation. [cite: 30]</li>
-                    <li>Ensured project deliverables were met on time and within budget via cross-functional collaboration. [cite: 33]</li>
+                <p style="color: #666;">Expedien E-solutions (Noida/Udaipur)</p>
+                <ul>
+                    <li>→ Worked with clients to identify business needs and provide customized software solutions.</li>
+                    <li>→ Conducted system analysis and design for the best software development approaches.</li>
+                    <li>→ Developed and implemented software solutions, including rigorous testing and debugging.</li>
+                    <li>→ Collaborated with clients to develop strategic plans for implementation.</li>
+                    <li>→ Ensured project deliverables were met on time and within budget via cross-functional collaboration.</li>
                 </ul>
             </div>
 
-            <div class="grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
-                <div class="glass-card">
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px;">
+                <div class="glass-card" style="padding: 30px;">
                     <h4>Whitix India Pvt Ltd</h4>
-                    <p style="color: var(--primary);">Supervisor (4 Months) [cite: 64]</p>
+                    <p style="color: var(--primary);">Supervisor (4 Months)</p>
                 </div>
-                <div class="glass-card">
+                <div class="glass-card" style="padding: 30px;">
                     <h4>SBI Teamlease</h4>
-                    <p style="color: var(--primary);">Credit Card Executive (3 Months) [cite: 63]</p>
+                    <p style="color: var(--primary);">Credit Card Executive (3 Months)</p>
                 </div>
             </div>
         </section>
 
-        <section class="reveal">
-            <div class="section-header"><h2>Visual Showcase</h2></div>
-            <div class="gallery-grid">
-                <img src="1.jpeg" onclick="openLightbox(this.src)">
-                <img src="2.jpeg" onclick="openLightbox(this.src)">
-                <img src="3.jpeg" onclick="openLightbox(this.src)">
-                <img src="4.jpeg" onclick="openLightbox(this.src)">
-                <img src="5.jpeg" onclick="openLightbox(this.src)">
+        <section class="reveal" style="margin-top: 80px;">
+            <h2 class="work-title">GALLERY</h2>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px;">
+                <img src="1.jpeg" style="width:100%; height:300px; object-fit:cover; border-radius:20px; cursor:pointer;" onclick="openLB(this.src)">
+                <img src="2.jpeg" style="width:100%; height:300px; object-fit:cover; border-radius:20px; cursor:pointer;" onclick="openLB(this.src)">
+                <img src="3.jpeg" style="width:100%; height:300px; object-fit:cover; border-radius:20px; cursor:pointer;" onclick="openLB(this.src)">
+                <img src="4.jpeg" style="width:100%; height:300px; object-fit:cover; border-radius:20px; cursor:pointer;" onclick="openLB(this.src)">
             </div>
         </section>
 
-        <section class="reveal">
-            <div class="section-header"><h2>Expertise</h2></div>
-            <div class="glass-card">
-                <div class="skill-tag">IT PROJECT MANAGEMENT [cite: 49]</div>
-                <div class="skill-tag">SOFTWARE TESTING [cite: 47]</div>
-                <div class="skill-tag">QUALITY ASSURANCE [cite: 51]</div>
-                <div class="skill-tag">ERP HANDLING [cite: 23, 62]</div>
-                <div class="skill-tag">MICROSOFT OFFICE (ALL) [cite: 45]</div>
-                <div class="skill-tag">FAST LEARNER [cite: 48]</div>
-                <div class="skill-tag">ANALYTICAL SKILLS [cite: 51]</div>
+        <section class="reveal" style="margin-top: 100px;">
+            <div class="contact-box">
+                <h2 class="work-title">LET'S CONNECT</h2>
+                <a href="mailto:joshit857@gmail.com" class="contact-link">joshit857@gmail.com</a>
+                <p style="font-size: 1.5rem; color: var(--primary);">+91 7568881230</p>
+                <p style="margin-top: 10px; color: #555;">Udaipur, Rajasthan, India</p>
+                
+                <div class="social-icons">
+                    <a href="#"><i class="fab fa-linkedin"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="https://wa.me/917568881230"><i class="fab fa-whatsapp"></i></a>
+                </div>
             </div>
-        </section>
-
-        <section class="glass-card reveal">
-            <div class="section-header"><h2>Background</h2></div>
-            <table style="width: 100%; border-collapse: collapse; text-align: left;">
-                <tr style="border-bottom: 1px solid var(--border); color: var(--primary);">
-                    <th style="padding: 15px;">DEGREE</th>
-                    <th>UNIVERSITY</th>
-                    <th>YEAR</th>
-                </tr>
-                <tr style="border-bottom: 1px solid var(--border);">
-                    <td style="padding: 15px;">B.A</td>
-                    <td>MLSU University, Udaipur [cite: 57]</td>
-                    <td>2021 [cite: 57]</td>
-                </tr>
-                <tr style="border-bottom: 1px solid var(--border);">
-                    <td style="padding: 15px;">12th</td>
-                    <td>RBSE, Ajmer [cite: 56]</td>
-                    <td>2018 [cite: 56]</td>
-                </tr>
-                <tr style="border-bottom: 1px solid var(--border);">
-                    <td style="padding: 15px;">10th</td>
-                    <td>RBSE, Ajmer [cite: 55]</td>
-                    <td>2016 [cite: 55]</td>
-                </tr>
-            </table>
-            <p style="margin-top: 20px; color: var(--primary);">Certification: RSCIT (VMOU Kota) [cite: 66]</p>
-        </section>
-
-        <section class="reveal" style="text-align: center;">
-            <p style="color: var(--primary); letter-spacing: 5px;">GET IN TOUCH</p>
-            <h2 style="font-size: 3rem; margin-top: 20px;">joshit857@gmail.com</h2>
-            <p style="font-size: 1.5rem; margin-top: 10px;">+91 7568881230 [cite: 67]</p>
         </section>
     </div>
 
-    <footer>
-        <p>TARUN JOSHI • PROFESSIONAL PORTFOLIO 2026 • DESIGNED BY CJ</p>
+    <div id="lightbox" onclick="this.style.display='none'"><img id="lb-img" src=""></div>
+
+    <footer style="text-align: center; padding: 60px; color: #333; font-size: 0.8rem; letter-spacing: 2px;">
+        DESIGNED BY CJ • 2026
     </footer>
 
     <script>
-        // Start Portfolio & Music
         function startPortfolio() {
             const music = document.getElementById('bg-music');
             music.currentTime = 10;
             music.play();
+            
             document.getElementById('entry').style.opacity = '0';
-            setTimeout(() => document.getElementById('entry').style.display = 'none', 500);
+            setTimeout(() => {
+                document.getElementById('entry').style.display = 'none';
+                document.getElementById('hero-sec').classList.add('active');
+            }, 800);
         }
 
-        // Lightbox
-        function openLightbox(src) {
-            document.getElementById('lightbox-img').src = src;
+        function openLB(src) {
+            document.getElementById('lb-img').src = src;
             document.getElementById('lightbox').style.display = 'flex';
         }
 
-        // Reveal Animation
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) entry.target.classList.add('active');
             });
-        }, { threshold: 0.15 });
+        }, { threshold: 0.1 });
 
         document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
     </script>
